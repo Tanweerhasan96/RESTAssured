@@ -1,0 +1,26 @@
+package crud_Operation_WithBDD;
+
+import java.io.File;
+
+import org.testng.annotations.Test;
+
+import io.restassured.http.ContentType;
+
+import static io.restassured.RestAssured.*;
+public class CreateProjectFile 
+{
+	@Test
+	public void create()
+	{
+		baseURI="http://rmgtestingserver";
+		port=8084;
+		File file = new File("./withBDDFile.json");
+		//File file=new File("./SDET_45_RestAssured/project_new.json");
+		
+		given().body(file).contentType(ContentType.JSON)
+		.when().post("/addProject")
+		.then().assertThat().statusCode(201).contentType(ContentType.JSON).log().all();
+		
+		
+	}
+}
